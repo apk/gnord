@@ -14,6 +14,7 @@ import (
 
 var addr = flag.String("addr", "127.0.0.1:4040", "http service address")
 var docroot = flag.String("path", ".", "http root directory")
+var iphead = flag.String("ip", ".", "header for remote IP")
 
 func main() {
 	flag.Parse()
@@ -45,9 +46,11 @@ func main() {
 			cginame := file + ".cgi"
 			_, e = os.Stat(cginame)
 			if (e == nil) {
-				ff := r.Header.Get("X-Forwarded-For")
-				if ff != "" {
-					r.RemoteAddr = ff
+				if *iphead != "" {
+					ff := r.Header.Get(*iphead)
+					if ff != "" {
+						r.RemoteAddr = ff
+					}
 				}
 				h := cgi.Handler{
 					Path: cginame,

@@ -34,11 +34,12 @@ Use `--addr host:port` to change. Binding
 to localhost is recommended, but not enforced
 (nor made easy in any way).
 
-## Missing features
-
-The `REMOTE_ADDR` for cgi scripts should come from
-a header passed by the proxy, and not be the one
-from the direct connection.
+If `--ip <name>` is given the named request header
+(if present) will be used instead of the connection
+remote IP for `REMOTE_ADDR` in cgi scripts. E.g.
+`--ip X-Forwarded-For`. Security considerations
+apply - your proxy should unconditionally set the
+header you specify here.
 
 ## Bugs
 
