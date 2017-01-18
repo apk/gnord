@@ -23,7 +23,7 @@ Only serves a single document tree - no virtual hosts.
 You are expected to run this behind nginx or similar,
 even if just for SSL.
 
-## Other
+## Options
 
 By default it serves the current directory
 and thus must be started there. Use
@@ -33,3 +33,15 @@ Default listener port is `127.0.0.1:4040`.
 Use `--addr host:port` to change. Binding
 to localhost is recommended, but not enforced
 (nor made easy in any way).
+
+## Missing features
+
+The `REMOTE_ADDR` for cgi scripts should come from
+a header passed by the proxy, and not be the one
+from the direct connection.
+
+## Bugs
+
+Directory listings still contain the cgi scripts
+under their actual `t.cgi` name, not as `t`. Directory
+listings could be better anyway.
