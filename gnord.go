@@ -35,7 +35,7 @@ func main() {
 		}
 
 		f, e := os.Lstat(file)
-		if f.Mode() & os.ModeSymlink != 0 {
+		if e == nil && (f.Mode() & os.ModeSymlink != 0) {
 			s, e := os.Readlink(file)
 			if e == nil {
 				fmt.Printf("Symlink to %v\n", s);
