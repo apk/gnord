@@ -19,15 +19,13 @@ func main() {
 	flag.Parse()
 	pth, err := filepath.Abs(*docroot)
 	if (err != nil) {
-		fmt.Printf("err=%v\n",err)
+		fmt.Printf("filepath.Abs(%v): %v\n",*docroot,err)
 		return
 	}
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 		file := filepath.Join(pth, filepath.FromSlash(path))
-		fmt.Printf("file=%v\n",file)
 		ext := filepath.Ext(file)
-		fmt.Printf("ext=%v\n",ext)
 		if ext == ".cgi" {
 			// Hide cgi files from plain view
 			http.NotFound(w, r)
@@ -38,7 +36,6 @@ func main() {
 		if e == nil && (f.Mode() & os.ModeSymlink != 0) {
 			s, e := os.Readlink(file)
 			if e == nil {
-				fmt.Printf("Symlink to %v\n", s);
 				http.Redirect(w, r, s, http.StatusSeeOther)
 				return
 			}
@@ -46,7 +43,6 @@ func main() {
 
 		if os.IsNotExist(e) {
 			cginame := file + ".cgi"
-			fmt.Printf("cgi=%v\n", cginame)
 			_, e = os.Stat(cginame)
 			if (e == nil) {
 				h := cgi.Handler{
