@@ -45,6 +45,10 @@ func main() {
 			cginame := file + ".cgi"
 			_, e = os.Stat(cginame)
 			if (e == nil) {
+				ff := r.Header.Get("X-Forwarded-For")
+				if ff != "" {
+					r.RemoteAddr = ff
+				}
 				h := cgi.Handler{
 					Path: cginame,
 					Root: pth,
