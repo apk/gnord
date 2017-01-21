@@ -1,6 +1,7 @@
 # A go http server
 
-Modeled after [https://www.fefe.de/fnord/](fnord), a C webserver.
+Modeled after some features of [https://www.fefe.de/fnord/](fnord),
+a C webserver.
 
 ## Features
 
