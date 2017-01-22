@@ -2,12 +2,11 @@ package main
 
 import (
 	"net/http"
-	"net/http/cgi"
-	"log"
-	"os"
-	"fmt"
 	"flag"
+	"fmt"
+	"log"
 	"path/filepath"
+	gnord "github.com/apk/httptools"
 )
 
 // See also https://github.com/mattn/go-cgiserver/blob/master/cgiserver.go
@@ -23,45 +22,6 @@ func main() {
 		fmt.Printf("filepath.Abs(%v): %v\n",*docroot,err)
 		return
 	}
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		path := r.URL.Path
-		file := filepath.Join(pth, filepath.FromSlash(path))
-		ext := filepath.Ext(file)
-		if ext == ".cgi" {
-			// Hide cgi files from plain view
-			http.NotFound(w, r)
-			return
-		}
-
-		f, e := os.Lstat(file)
-		if e == nil && (f.Mode() & os.ModeSymlink != 0) {
-			s, e := os.Readlink(file)
-			if e == nil {
-				http.Redirect(w, r, s, http.StatusSeeOther)
-				return
-			}
-		}
-
-		if os.IsNotExist(e) {
-			cginame := file + ".cgi"
-			_, e = os.Stat(cginame)
-			if (e == nil) {
-				if *iphead != "" {
-					ff := r.Header.Get(*iphead)
-					if ff != "" {
-						r.RemoteAddr = ff
-					}
-				}
-				h := cgi.Handler{
-					Path: cginame,
-					Root: pth,
-				}
-				h.ServeHTTP(w, r)
-				return
-			}
-		}
-		http.ServeFile(w, r, file)
-	})
-
+	http.HandleFunc("/", gnord.GnordHandleFunc(&gnord.GnordOpts{Path: pth}))
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
