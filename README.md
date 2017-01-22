@@ -42,7 +42,14 @@ remote IP for `REMOTE_ADDR` in cgi scripts. E.g.
 apply - your proxy should unconditionally set the
 header you specify here.
 
+`--well-known <host>` allows to forward requests
+to `/.well-known` (let's encrypt validator) to
+`https://host/.well-known`, to allow to do the
+actual cert generation elsewhere.
+
 ## Bugs
+
+No SSL yet.
 
 Directory listings still contain the cgi scripts
 under their actual `t.cgi` name, not as `t`. Directory
