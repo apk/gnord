@@ -22,6 +22,6 @@ func main() {
 		fmt.Printf("filepath.Abs(%v): %v\n",*docroot,err)
 		return
 	}
-	http.HandleFunc("/", gnord.GnordHandleFunc(&gnord.GnordOpts{Path: pth}))
+	http.HandleFunc("/", gnord.GnordHandleFunc(&gnord.GnordOpts{Path: pth, IpHeader: *iphead}))
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
