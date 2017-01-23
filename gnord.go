@@ -14,7 +14,7 @@ import (
 
 var addr = flag.String("addr", "127.0.0.1:4040", "http service address")
 var docroot = flag.String("path", ".", "http root directory")
-var iphead = flag.String("ip", ".", "header for remote IP")
+var iphead = flag.String("ip", "", "header for remote IP")
 var wellknown = flag.String("well-known", "", "host for .well-known")
 
 func main() {
