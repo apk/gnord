@@ -1,6 +1,6 @@
 # A go http server
 
-Modeled after some features of [https://www.fefe.de/fnord/](fnord),
+Modeled after some features of [fnord](https://www.fefe.de/fnord/),
 a C webserver.
 
 ## Features
@@ -22,7 +22,8 @@ easily have page URLs without the `.html` ending.
 
 Only serves a single document tree - no virtual hosts.
 You are expected to run this behind nginx or similar,
-even if just for SSL.
+even if just for SSL. (Or for a [tor](https://www.torproject.org/)
+onion service.)
 
 ## Options
 
