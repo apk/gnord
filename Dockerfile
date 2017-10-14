@@ -10,11 +10,11 @@ RUN CGO_ENABLED=0 go build -o gnord
 FROM scratch
 MAINTAINER Andreas Krey <a.krey@gmx.de>
 
-WORKDIR /data
+WORKDIR /html
 
 COPY --from=binary /app/gnord /gnord
 
 EXPOSE 3046
 
-VOLUME ["/data"]
+VOLUME ["/html"]
 CMD ["/gnord"]
