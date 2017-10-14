@@ -14,7 +14,7 @@ WORKDIR /html
 
 COPY --from=binary /app/gnord /gnord
 
-EXPOSE 3046
+EXPOSE 80
 
 VOLUME ["/html"]
-CMD ["/gnord"]
+CMD ["/gnord","--ip","80"]
