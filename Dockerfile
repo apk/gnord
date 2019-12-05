@@ -1,3 +1,5 @@
+#% Name: apk/gnord
+
 FROM golang:alpine3.6 AS binary
 ADD . /app
 WORKDIR /app
