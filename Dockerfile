@@ -19,4 +19,4 @@ COPY --from=binary /app/gnord /gnord
 EXPOSE 80
 
 VOLUME ["/html"]
-CMD ["/gnord","--ip","80"]
+CMD ["/gnord","--ip","X-Forwarded-for","--addr","0.0.0.0:4040"]
