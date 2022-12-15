@@ -14,6 +14,7 @@ import (
 
 var addr = flag.String("addr", "127.0.0.1:4040", "http service address")
 var docroot = flag.String("path", ".", "http root directory")
+var cgiroot = flag.String("cgipath", "", "cgi root directory")
 var iphead = flag.String("ip", "", "header for remote IP")
 var wellknown = flag.String("well-known", "", "host for .well-known")
 
@@ -26,7 +27,16 @@ func main() {
 		return
 	}
 
-	mux.HandleFunc("/", gnord.GnordHandleFunc(&gnord.GnordOpts{Path: pth, IpHeader: *iphead}))
+	cgi := "";
+	if(*cgiroot != "")  {
+		cgi, err = filepath.Abs(*cgiroot)
+		if (err != nil) {
+			fmt.Printf("filepath.Abs(%v): %v\n",*cgiroot,err)
+			return
+		}
+	}
+
+	mux.HandleFunc("/", gnord.GnordHandleFunc(&gnord.GnordOpts{Path: pth, IpHeader: *iphead, CgiPath: cgi}))
 
 	if *wellknown != "" {
 		mux.HandleFunc("/.well-known/", gnord.SSLForwarderHandleFunc(*wellknown))
